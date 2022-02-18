@@ -15,7 +15,7 @@ function Deposit() {
     const username = localStorage.getItem("username");
 
     try {
-      fetch(`api/users/account/${username}`, {
+      fetch(`${process.env.REACT_APP_API_URL}api/users/account/${username}`, {
         headers: {
           Authorization: localStorage.getItem("SavedToken"),
         },
@@ -46,7 +46,7 @@ function Deposit() {
 
     try {
       const username = localStorage.getItem("username");
-      fetch("api/users/transactions", {
+      fetch(`${process.env.REACT_APP_API_URL}api/users/transactions`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

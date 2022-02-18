@@ -12,7 +12,7 @@ const AllAccounts = (props) => {
     if (!token) return navigate("/login");
     //Fetch all accounts from API
     try {
-      fetch("api/users", {
+      fetch(`${process.env.REACT_APP_API_URL}api/users`, {
         headers: { Authorization: localStorage.getItem("SavedToken") },
       })
         .then((res) => res.json())

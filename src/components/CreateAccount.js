@@ -38,18 +38,20 @@ function CreateAccount() {
               onSubmit={(values, { resetForm }) => {
                 (async () => {
                   try {
-                    const response = await fetch("api/users", {
-                      method: "POST",
-                      headers: {
-                        "Content-Type": "application/json",
-                      },
-                      body: JSON.stringify({
-                        username: `${values.username}`,
-                        email: `${values.email}`,
-                        password: `${values.password}`,
-                      }),
-                    })
-                      .then((res) => res.json())
+                    const response = await fetch(
+                      `${process.env.REACT_APP_API_URL}api/users`,
+                      {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                          username: `${values.username}`,
+                          email: `${values.email}`,
+                          password: `${values.password}`,
+                        }),
+                      }
+                    ).then((res) => res.json());
                     console.log(response);
                   } catch (err) {
                     console.log(err);
@@ -125,13 +127,13 @@ function CreateAccount() {
                   <br />
                   <button
                     type="submit"
-                    disabled={ !isValid }
+                    disabled={!isValid}
                     className="btn btn-outline-primary w-100"
                   >
                     Submit
                   </button>
-                  <br/>
-                  <br/>
+                  <br />
+                  <br />
                   <button
                     type="reset"
                     className="btn btn-outline-primary mt-1 w-100"
@@ -140,9 +142,11 @@ function CreateAccount() {
                   </button>
                   <br />
                   <br />
-                  Already have an account? 
-                  <br/> 
-                  <a href="/login" style={{color: "blue"}}>Login</a>
+                  Already have an account?
+                  <br />
+                  <a href="/login" style={{ color: "blue" }}>
+                    Login
+                  </a>
                 </Form>
               )}
             </Formik>

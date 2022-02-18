@@ -8,24 +8,12 @@ const Navigation = () => {
 
   const { currentUser, setUser } = useNewUser();
 
-  // const fetchCurrentUser = useCallback(() => {
-  //   const user = localStorage.getItem('username');
-  //   if (!user) return;
-  //   console.log(user);
-  // }, [currentUser]);
-
-  // useEffect(fetchCurrentUser, [fetchCurrentUser]);
-
   function handleLogout() {
     localStorage.setItem("username", "");
     localStorage.setItem("SavedToken", "");
     setUser(null);
     navigate("/login");
   }
-
-  // function goToLogin() {
-  //   navigate("/login");
-  // }
 
   return (
     <div>

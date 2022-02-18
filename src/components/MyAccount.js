@@ -10,7 +10,7 @@ const MyAccount = () => {
     const username = localStorage.getItem("username");
     if (!username) return navigate("/login");
 
-    fetch(`api/users/account/${username}`, {
+    fetch(`${process.env.REACT_APP_API_URL}api/users/account/${username}`, {
       headers: {
         Authorization: localStorage.getItem("SavedToken"),
       },

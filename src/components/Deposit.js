@@ -42,7 +42,7 @@ function Deposit() {
     const accountUpdate =
       accountType === "checking"
         ? { checkingBalance: +values.depositAmount, savingsBalance: 0 }
-        : { checkingBalance: 0, savingsBalance: +values.withdrawAmount };
+        : { checkingBalance: 0, savingsBalance: +values.depositAmount };
 
     try {
       const username = localStorage.getItem("username");

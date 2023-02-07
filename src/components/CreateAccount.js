@@ -24,7 +24,7 @@ function CreateAccount() {
     <div className="container">
       <MyCard
         className="mx-auto"
-        header="Create Account"
+        header="Please Create Account"
         txtcolor="black"
         body={
           show ? (

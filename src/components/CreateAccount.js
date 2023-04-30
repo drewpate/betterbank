@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import MyCard from "./MyCard";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
 function CreateAccount() {
-  const [show, setShow] = React.useState(true);
+  const [show, setShow] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   let navigate = useNavigate();
 
@@ -37,6 +38,7 @@ function CreateAccount() {
               validationSchema={formSchema}
               onSubmit={(values, { resetForm }) => {
                 (async () => {
+                  setLoading(true);
                   try {
                     const response = await fetch(
                       `${process.env.REACT_APP_API_URL}api/users`,
@@ -53,13 +55,14 @@ function CreateAccount() {
                       }
                     ).then((res) => res.json());
                     console.log(response);
+                    setShow(false);
+                    setLoading(false);
                   } catch (err) {
                     console.log(err);
                     throw new Error(err.message);
                   }
                 })();
                 resetForm();
-                setShow(false);
               }}
             >
               {({ errors, touched, isValid, dirty }) => (
@@ -127,7 +130,7 @@ function CreateAccount() {
                   <br />
                   <button
                     type="submit"
-                    disabled={!isValid}
+                    disabled={loading}
                     className="btn btn-outline-primary w-100"
                   >
                     Submit

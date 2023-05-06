@@ -19,6 +19,10 @@ function CreateAccount() {
       .email("Please enter a valid email")
       .required("Required"),
     password: Yup.string().min(8, "Too short").required("Required"),
+    confirmPassword: Yup.string().oneOf(
+      [Yup.ref("password"), null],
+      "Passwords must match"
+    ),
   });
 
   return (
@@ -34,6 +38,7 @@ function CreateAccount() {
                 username: "",
                 email: "",
                 password: "",
+                confirmPassword: "",
               }}
               validationSchema={formSchema}
               onSubmit={(values, { resetForm }) => {
@@ -57,12 +62,12 @@ function CreateAccount() {
                     console.log(response);
                     setShow(false);
                     setLoading(false);
+                    resetForm();
                   } catch (err) {
                     console.log(err);
                     throw new Error(err.message);
                   }
                 })();
-                resetForm();
               }}
             >
               {({ errors, touched, isValid, dirty }) => (
@@ -128,6 +133,27 @@ function CreateAccount() {
                     </div>
                   ) : null}
                   <br />
+                  Confirm Password
+                  <br />
+                  <Field
+                    className="form-control"
+                    name="confirmPassword"
+                    placeholder="Confirm Password"
+                    type="password"
+                    autoComplete="new-password"
+                  />
+                  {errors.confirmPassword && touched.confirmPassword ? (
+                    <div
+                      style={{
+                        color: "red",
+                        fontWeight: "bold",
+                        fontSize: "x-small",
+                      }}
+                    >
+                      {errors.confirmPassword}
+                    </div>
+                  ) : null}
+                  <br />
                   <button
                     type="submit"
                     disabled={loading}
@@ -140,6 +166,7 @@ function CreateAccount() {
                   <button
                     type="reset"
                     className="btn btn-outline-primary mt-1 w-100"
+                    disabled={loading}
                   >
                     Clear
                   </button>

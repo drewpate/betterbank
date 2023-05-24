@@ -5,8 +5,10 @@ import MyCard from "./MyCard";
 const MyAccount = () => {
   let navigate = useNavigate();
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   React.useEffect(() => {
+    setLoading(true);
     const username = localStorage.getItem("username");
     if (!username) return navigate("/login");
 
@@ -18,6 +20,7 @@ const MyAccount = () => {
       .then((res) => res.json())
       .then((data) => {
         setData(data);
+        setLoading(false);
       })
       .catch((e) =>
         console.error("Something went wrong getting account details", e)
@@ -29,8 +32,8 @@ const MyAccount = () => {
       txtcolor="black"
       key={data._id}
       header={`Balances`}
-      body={`Checking Balance: ${data.checkingBalance}`}
-      body2={`Savings Balance: ${data.savingsBalance}`}
+      body={loading? <p>Loading...</p> :`Checking Balance: ${data.checkingBalance}`}
+      body2={ loading? <></> : `Savings Balance: ${data.savingsBalance}`}
     />
   );
 };

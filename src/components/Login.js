@@ -9,6 +9,7 @@ import * as Yup from "yup";
 const Login = () => {
   const [show, setShow] = useState(true);
   const [loginError, setLoginError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { currentUser, setUser } = useNewUser();
 
   useEffect(() => {
@@ -26,6 +27,7 @@ const Login = () => {
   let navigate = useNavigate();
 
   const handleLogin = (values) => {
+    setLoading(true);
     fetch(`${process.env.REACT_APP_API_URL}api/users/login`, {
       method: "POST",
       headers: {
@@ -50,6 +52,7 @@ const Login = () => {
         localStorage.setItem("SavedToken", token);
         localStorage.setItem("username", values.username);
         setUser(values.username);
+        setLoading(false);
         setShow(false);
       })
       .catch((error) => console.error("Error occurred on login", error));
@@ -116,7 +119,7 @@ const Login = () => {
                   ) : null}
                   <button
                     type="submit"
-                    disabled={!(isValid && dirty)}
+                    disabled={loading}
                     className="btn btn-outline-primary w-100"
                   >
                     Submit

@@ -71,7 +71,7 @@ function Deposit() {
         className="mx-auto"
         header="Deposit"
         txtcolor="black"
-        body={ loading ? <p>Loading...</p> :
+        body={
           <Formik
             initialValues={{
               userPosition: "",
@@ -119,7 +119,7 @@ function Deposit() {
                   <option value="savings">Savings</option>
                 </Field>
                 <br />
-                {selectedOption === "checking" ? (
+                { loading? <p>Loading...</p> : selectedOption === "checking" ? (
                   <p>{"Balance $" + checkingBalance}</p>
                 ) : (
                   <p>{"Balance $" + savingsBalance}</p>

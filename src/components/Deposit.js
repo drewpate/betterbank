@@ -25,13 +25,13 @@ function Deposit() {
         .then((res) => res.json())
         .then((data) => {
           setData(data);
+          setLoading(false)
         });
     } catch (err) {
       throw new Error(err.message);
     }
     setCheckingBalance(data.checkingBalance);
     setSavingsBalance(data.savingsBalance);
-    setLoading(false)
   }, [data.checkingBalance, data.savingsBalance]);
 
   const DepositSchema = Yup.object().shape({
@@ -119,9 +119,9 @@ function Deposit() {
                   <option value="savings">Savings</option>
                 </Field>
                 <br />
-                { loading? <p>Loading...</p> : selectedOption === "checking" ? (
+                { loading ? <p>Loading...</p> : selectedOption === "checking" ? (
                   <p>{"Balance $" + checkingBalance}</p>
-                ) : (
+                ) : ( loading? <p>Loading...</p> :
                   <p>{"Balance $" + savingsBalance}</p>
                 )}
                 {errors.userPosition && touched.userPosition ? (

@@ -10,8 +10,10 @@ function Deposit() {
   const [savingsBalance, setSavingsBalance] = useState([]);
   const [selectedOption, setSelectedOption] = useState("checking");
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   React.useEffect(() => {
+    setLoading(true);
     const username = localStorage.getItem("username");
 
     try {
@@ -29,6 +31,7 @@ function Deposit() {
     }
     setCheckingBalance(data.checkingBalance);
     setSavingsBalance(data.savingsBalance);
+    setLoading(false)
   }, [data.checkingBalance, data.savingsBalance]);
 
   const DepositSchema = Yup.object().shape({
@@ -68,7 +71,7 @@ function Deposit() {
         className="mx-auto"
         header="Deposit"
         txtcolor="black"
-        body={
+        body={ loading ? <p>Loading...</p> :
           <Formik
             initialValues={{
               userPosition: "",
